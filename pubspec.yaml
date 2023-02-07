@@ -51,6 +51,8 @@ dependencies:
   flutter_cache_manager:
     #icon leva
   getwidget:
+  flutter_local_notifications:
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:

@@ -71,30 +71,27 @@ class _recent_pageState extends State<recent_page> {
               controller: _controller,
               itemCount: alldata.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () {
-                      print('Hello recent');
+                return InkWell(
+                  onTap: () {
+                    print('Hello recent');
 
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return origional_image(
-                              index: index, recentlist: alldata);
-                        },
-                      ));
-                    },
-                    child: Container(
-                      child: Image.network(
-                        "https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}",
-                        fit: BoxFit.cover,
-                      ),
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return origional_image(
+                            index: index, recentlist: alldata);
+                      },
+                    ));
+                  },
+                  child: Container(
+                    child: Image.network(
+                      "https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}",
+                      fit: BoxFit.cover,
                     ),
                   ),
                 );
               },
               gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 2,mainAxisSpacing: 2),
             ),
     );
   }

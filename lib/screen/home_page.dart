@@ -19,8 +19,8 @@ class _home_pageState extends State<home_page> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Tatto Collection"),
-          centerTitle: true,
+          title: Text("Neck Tattoos"),
+
 
           bottom: TabBar(
               tabs:[

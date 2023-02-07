@@ -82,15 +82,15 @@ class _random_pageState extends State<random_page> {
       body: data_random==null? Center(child: CircularProgressIndicator(),):GridView.builder(controller: _controller,
           itemCount: datalist.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {
-                  print("${datalist[index].imageUpload.toString()}");
-                  Navigator.push(context,MaterialPageRoute(builder: (context) {
-                    return origional_image(index:index,recentlist: datalist,);
-                  },));
-                },
+            return InkWell(
+              onTap: () {
+                print("${datalist[index].imageUpload.toString()}");
+                Navigator.push(context,MaterialPageRoute(builder: (context) {
+                  return origional_image(index:index,recentlist: datalist,);
+                },));
+              },
+              child: Padding(
+                padding: EdgeInsets.all(0),
                 child: Container(
                   child: Image.network("https://necktattoo.emozzydev.xyz//upload/thumbs/${datalist[index].imageUpload.toString()}",fit: BoxFit.cover),
                 ),
@@ -98,7 +98,7 @@ class _random_pageState extends State<random_page> {
             );
           },
           gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2)),
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 2,mainAxisSpacing: 2)),
     );
   }
 }

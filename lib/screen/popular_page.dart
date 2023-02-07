@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:photo_view/photo_view.dart';
 
 import 'package:tatto_application/screen/applay_screen/origional_image.dart';
 
 import '../api/recent_model.dart';
+import '../main.dart';
 
 
 
@@ -25,6 +28,15 @@ class _popular_pageState extends State<popular_page> {
 
 
 
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
+
+
+
+
+
+
   final _controller = ScrollController();
   int pagenumber=1;
   bool isloadmore=false;
@@ -37,6 +49,8 @@ class _popular_pageState extends State<popular_page> {
     // TODO: implement initState
     super.initState();
     popular_api();
+
+
 
     _controller.addListener(() {
       print("lodaer");
@@ -100,21 +114,23 @@ class _popular_pageState extends State<popular_page> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: data_popular==null?Center(child: CircularProgressIndicator(),): GridView.builder(controller: _controller,itemCount: alldata!.length,itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: InkWell(
-            onTap: () {
-              // print("${data_popular!.posts![index].imageUpload.toString()}");
-              Navigator.push(context,MaterialPageRoute(builder: (context) {
-                return origional_image(index: index,recentlist: alldata,);
-              },));
-            },
-            child: Container(
-              child:Image.network("https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}",fit: BoxFit.cover),
+        return Stack(
+          children: [
+            InkWell(
+              onTap: () {
+                // print("${data_popular!.posts![index].imageUpload.toString()}");
+                Navigator.push(context,MaterialPageRoute(builder: (context) {
+                  return origional_image(index: index,recentlist: alldata,);
+                },));
+              },
+              child: Container(
+                child:Image.network("https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}",fit: BoxFit.cover),
+              ),
             ),
-          ),
+            if(isloadmore==true)Center(child: CircularProgressIndicator()),
+          ],
         );
-      },gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),shrinkWrap: true,),
+      },gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 2,mainAxisSpacing: 2)),
     );
   }
 }
