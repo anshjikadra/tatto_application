@@ -33,91 +33,91 @@ class _origional_imageState extends State<origional_image> {
 
 
 // DOWNLOAD IMAGE
-  void showNotification() async {
-    AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-        "notifications-NeckTatto",
-        "YouTube Notifications",
-        priority: Priority.max,
-        importance: Importance.max
-    );
-
-    DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    NotificationDetails notiDetails = NotificationDetails(
-        android: androidDetails,
-        iOS: iosDetails
-    );
-    notificationsPlugin.show(
-        0,
-        "${widget.recentlist[widget.index].imageUpload}",
-        "Complete Download",
-      notiDetails);
-
-
-  }
-
-  void checkForNotification() async {
-    NotificationAppLaunchDetails? details = await notificationsPlugin.getNotificationAppLaunchDetails();
-
-    if(details != null) {
-      if(details.didNotificationLaunchApp) {
-        NotificationResponse? response = details.notificationResponse;
-
-        if(response != null) {
-          String? payload = response.payload;
-          log("Notification Payload: $payload");
-        }
-      }
-    }
-  }
-
-  //APPLYE NOTIFICATION...
-
-  void wallpaper_Notification() async {
-    AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-        "notifications-NeckTatto",
-        "YouTube Notifications",
-        priority: Priority.max,
-        importance: Importance.max
-    );
-
-    DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    NotificationDetails notiDetails = NotificationDetails(
-        android: androidDetails,
-        iOS: iosDetails
-    );
-    notificationsPlugin.show(
-        0,
-        "${widget.recentlist[widget.index].imageUpload}",
-        "wallpaper set succesfully!.",
-        notiDetails);
-
-
-  }
-
-  void w_checkForNotification() async {
-    NotificationAppLaunchDetails? details = await notificationsPlugin.getNotificationAppLaunchDetails();
-
-    if(details != null) {
-      if(details.didNotificationLaunchApp) {
-        NotificationResponse? response = details.notificationResponse;
-
-        if(response != null) {
-          String? payload = response.payload;
-          log("Notification Payload: $payload");
-        }
-      }
-    }
-  }
+//   void showNotification() async {
+//     AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+//         "notifications-NeckTatto",
+//         "YouTube Notifications",
+//         priority: Priority.max,
+//         importance: Importance.max
+//     );
+//
+//     DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
+//       presentAlert: true,
+//       presentBadge: true,
+//       presentSound: true,
+//     );
+//
+//     NotificationDetails notiDetails = NotificationDetails(
+//         android: androidDetails,
+//         iOS: iosDetails
+//     );
+//     notificationsPlugin.show(
+//         0,
+//         "${widget.recentlist[widget.index].imageUpload}",
+//         "Complete Download",
+//       notiDetails);
+//
+//
+//   }
+//
+//   void checkForNotification() async {
+//     NotificationAppLaunchDetails? details = await notificationsPlugin.getNotificationAppLaunchDetails();
+//
+//     if(details != null) {
+//       if(details.didNotificationLaunchApp) {
+//         NotificationResponse? response = details.notificationResponse;
+//
+//         if(response != null) {
+//           String? payload = response.payload;
+//           log("Notification Payload: $payload");
+//         }
+//       }
+//     }
+//   }
+//
+//   //APPLYE NOTIFICATION...
+//
+//   void wallpaper_Notification() async {
+//     AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+//         "notifications-NeckTatto",
+//         "YouTube Notifications",
+//         priority: Priority.max,
+//         importance: Importance.max
+//     );
+//
+//     DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
+//       presentAlert: true,
+//       presentBadge: true,
+//       presentSound: true,
+//     );
+//
+//     NotificationDetails notiDetails = NotificationDetails(
+//         android: androidDetails,
+//         iOS: iosDetails
+//     );
+//     notificationsPlugin.show(
+//         0,
+//         "${widget.recentlist[widget.index].imageUpload}",
+//         "wallpaper set succesfully!.",
+//         notiDetails);
+//
+//
+//   }
+//
+//   void w_checkForNotification() async {
+//     NotificationAppLaunchDetails? details = await notificationsPlugin.getNotificationAppLaunchDetails();
+//
+//     if(details != null) {
+//       if(details.didNotificationLaunchApp) {
+//         NotificationResponse? response = details.notificationResponse;
+//
+//         if(response != null) {
+//           String? payload = response.payload;
+//           log("Notification Payload: $payload");
+//         }
+//       }
+//     }
+//   }
 
 
 
@@ -130,7 +130,8 @@ class _origional_imageState extends State<origional_image> {
     // TODO: implement initState
     super.initState();
     controller = PageController(initialPage: widget.index);
-    checkForNotification();
+    // checkForNotification();
+    // w_checkForNotification();
 
   }
 
@@ -220,8 +221,8 @@ class _origional_imageState extends State<origional_image> {
 
                     int location = WallpaperManager.HOME_SCREEN;
                     var file=await DefaultCacheManager().getSingleFile(wallpeaeper);
-                    bool result = await WallpaperManager.setWallpaperFromFile(file.path, location);
-                    wallpaper_Notification();
+                    bool result = await WallpaperManager.setWallpaperFromFile(file.path, location).then((value) => wallpaper_toast());
+                   
 
                   },
                   text: "Apply",size: 40,
@@ -240,7 +241,7 @@ class _origional_imageState extends State<origional_image> {
                     final path = '${tempDir.path}/myfile.jpg' ;
                     await Dio().download(imgurl,path);
 
-                    await GallerySaver.saveImage("https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}").then((value) => showNotification());
+                    await GallerySaver.saveImage("https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}").then((value) => download_toast());
 
 
                   },
@@ -270,7 +271,31 @@ class _origional_imageState extends State<origional_image> {
       ),
     );
   }
+  
+  
+  download_toast()
+  {
+    Fluttertoast.showToast(
+        msg: "Download Succesfully",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black26,
+        textColor: Colors.white,
+        fontSize: 13.0);
+  }
 
+  wallpaper_toast()
+  {
+    Fluttertoast.showToast(
+        msg: "Succesfully applied",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black26,
+        textColor: Colors.white,
+        fontSize: 13.0);
+  }
 
 }
 

@@ -114,23 +114,26 @@ class _popular_pageState extends State<popular_page> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: data_popular==null?Center(child: CircularProgressIndicator(),): GridView.builder(controller: _controller,itemCount: alldata!.length,itemBuilder: (context, index) {
-        return Stack(
-          children: [
-            InkWell(
-              onTap: () {
-                // print("${data_popular!.posts![index].imageUpload.toString()}");
-                Navigator.push(context,MaterialPageRoute(builder: (context) {
-                  return origional_image(index: index,recentlist: alldata,);
-                },));
-              },
-              child: Container(
-                child:Image.network("https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}",fit: BoxFit.cover),
-              ),
-            ),
-            if(isloadmore==true)Center(child: CircularProgressIndicator()),
-          ],
+        return  InkWell(
+          onTap: () {
+            // print("${data_popular!.posts![index].imageUpload.toString()}");
+            Navigator.push(context,MaterialPageRoute(builder: (context) {
+              return origional_image(index: index,recentlist: alldata,);
+            },));
+          },
+          child: Container(
+            child:Image.network("https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}",fit: BoxFit.fitWidth),
+          ),
+
         );
       },gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 2,mainAxisSpacing: 2)),
     );
   }
 }
+//Image.network("https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}",fit: BoxFit.fitWidth)
+//Image.network("https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}", loadingBuilder: (context, child, loadingProgress) {
+//               print(loadingProgress!.cumulativeBytesLoaded);
+//               return Center(
+//                 child: const CircularProgressIndicator(),
+//               );
+//             }),
