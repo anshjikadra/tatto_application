@@ -251,13 +251,14 @@ class _origional_imageState extends State<origional_image> {
         ],
       ),
       floatingActionButton: SpeedDialFabWidget(
+
         secondaryIconsList: [
           Icons.download,
           Icons.wallpaper,
         ],
         secondaryIconsText: [
           "Download",
-          "Apply",
+          "Apply as wallpaper",
         ],
 
         secondaryIconsOnPress: [
@@ -278,7 +279,7 @@ class _origional_imageState extends State<origional_image> {
             String wallpeaeper =
                 "https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}";
 
-            int location = WallpaperManager.HOME_SCREEN;
+            int location = WallpaperManager.BOTH_SCREEN;
             var file = await DefaultCacheManager().getSingleFile(wallpeaeper);
             bool result =
                 await WallpaperManager.setWallpaperFromFile(file.path, location)
@@ -288,7 +289,7 @@ class _origional_imageState extends State<origional_image> {
         secondaryBackgroundColor: Colors.grey,
         secondaryForegroundColor: Colors.black,
         primaryBackgroundColor: Colors.blue,
-        primaryForegroundColor: Colors.black,
+        primaryForegroundColor: Colors.white,
       ),
     );
   }

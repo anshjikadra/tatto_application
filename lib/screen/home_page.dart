@@ -25,12 +25,8 @@ class _home_pageState extends State<home_page> {
                 Tab(
                   text: "Recent",
                 ),
-                Tab(
-                  text: "Popular",
-                ),
-                Tab(
-                  text: "Random",
-                ),
+                Tab(text: "Popular",),
+                Tab(text: "Random",),
               ]),
         ),
         body: TabBarView(children: [

@@ -76,6 +76,7 @@ class _recent_pageState extends State<recent_page> {
                 return Stack(
                   children: [
                     InkWell(
+
                       onTap: () {
                         print('Hello recent');
 
