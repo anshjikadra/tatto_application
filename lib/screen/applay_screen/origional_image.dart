@@ -14,6 +14,7 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:speed_dial_fab/speed_dial_fab.dart';
 import 'package:tatto_application/api/recent_model.dart';
 
 import '../../main.dart';
@@ -29,9 +30,6 @@ class origional_image extends StatefulWidget {
 }
 
 class _origional_imageState extends State<origional_image> {
-
-
-
 // DOWNLOAD IMAGE
 //   void showNotification() async {
 //     AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
@@ -119,12 +117,6 @@ class _origional_imageState extends State<origional_image> {
 //     }
 //   }
 
-
-
-
-
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -132,9 +124,7 @@ class _origional_imageState extends State<origional_image> {
     controller = PageController(initialPage: widget.index);
     // checkForNotification();
     // w_checkForNotification();
-
   }
-
 
   // String dr_path = "";
   // bool downloading = false;
@@ -157,39 +147,28 @@ class _origional_imageState extends State<origional_image> {
 
   //Downloading.......
 
-
-
-
-
-
-
-
   PageController controller = PageController();
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-
       body: Stack(
         children: [
-
           Expanded(
             child: Container(
-
-
               child: PageView.builder(
                 itemCount: widget.recentlist.length,
                 controller: controller,
                 onPageChanged: (value) {
                   setState(() {
-                    widget.index=value;
+                    widget.index = value;
                     print(widget.index);
                   });
                 },
                 itemBuilder: (context, index) {
-                  print("https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[index].imageUpload}");
+                  print(
+                      "https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[index].imageUpload}");
                   return Container(
                     child: PhotoView(
                         imageProvider: NetworkImage(
@@ -199,82 +178,122 @@ class _origional_imageState extends State<origional_image> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                // TextButton(onPressed: () async{
-                //
-                //   String wallpeaeper="https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}";
-                //
-                //   int location = WallpaperManager.BOTH_SCREEN;
-                //   var file=await DefaultCacheManager().getSingleFile(wallpeaeper);
-                //   bool result = await WallpaperManager.setWallpaperFromFile(file.path, location);
-                //
-                //
-                // }, child: Text("Apply",style: TextStyle(color: Colors.white,fontSize: 20),)),
+          /*
+            * Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  // TextButton(onPressed: () async{
+                  //
+                  //   String wallpeaeper="https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}";
+                  //
+                  //   int location = WallpaperManager.BOTH_SCREEN;
+                  //   var file=await DefaultCacheManager().getSingleFile(wallpeaeper);
+                  //   bool result = await WallpaperManager.setWallpaperFromFile(file.path, location);
+                  //
+                  //
+                  // }, child: Text("Apply",style: TextStyle(color: Colors.white,fontSize: 20),)),
 
-                GFButton(
-                  onPressed: () async {
-                    String wallpeaeper="https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}";
+                  GFButton(
+                    onPressed: () async {
+                      String wallpeaeper = "https://necktattoo.emozzydev.xyz//upload/${widget
+                          .recentlist[widget.index].imageUpload}";
 
-                    int location = WallpaperManager.HOME_SCREEN;
-                    var file=await DefaultCacheManager().getSingleFile(wallpeaeper);
-                    bool result = await WallpaperManager.setWallpaperFromFile(file.path, location).then((value) => wallpaper_toast());
-                   
+                      int location = WallpaperManager.HOME_SCREEN;
+                      var file = await DefaultCacheManager().getSingleFile(
+                          wallpeaeper);
+                      bool result = await WallpaperManager.setWallpaperFromFile(
+                          file.path, location).then((value) =>
+                          wallpaper_toast());
+                    },
+                    text: "Apply", size: 40,
+                    icon: Icon(Icons.wallpaper, color: Colors.white, size: 30,),
+                  ),
+                  GFButton(
+                    onPressed: () async {
+                      print("+++++++++${widget.index}+++++++++++");
+                      String imgurl = "https://necktattoo.emozzydev.xyz//upload/${widget
+                          .recentlist[widget.index].imageUpload}";
+                      print("Image dowoinloading    ${imgurl}");
+                      //
+                      final tempDir = await getTemporaryDirectory();
+                      final path = '${tempDir.path}/myfile.jpg';
+                      await Dio().download(imgurl, path);
 
-                  },
-                  text: "Apply",size: 40,
-                  icon: Icon(Icons.wallpaper,color: Colors.white,size: 30,),
-                ),
-                GFButton(
-                  onPressed: () async {
+                      await GallerySaver.saveImage(
+                          "https://necktattoo.emozzydev.xyz//upload/${widget
+                              .recentlist[widget.index].imageUpload}").then((
+                          value) => download_toast());
+                    },
+                    text: "Download", size: 40,
+                    icon: Icon(Icons.download, color: Colors.white, size: 30,),
+                  ),
 
-
-                    
-                    print("+++++++++${widget.index}+++++++++++");
-                    String imgurl="https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}";
-                    print("Image dowoinloading    ${imgurl}");
-                    //
-                    final tempDir = await getTemporaryDirectory();
-                    final path = '${tempDir.path}/myfile.jpg' ;
-                    await Dio().download(imgurl,path);
-
-                    await GallerySaver.saveImage("https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}").then((value) => download_toast());
-
-
-                  },
-                  text: "Download",size: 40,
-                  icon: Icon(Icons.download,color: Colors.white,size: 30,),
-                ),
-
-                //
-                // TextButton(onPressed: () async {
-                //   print("+++++++++${widget.index}+++++++++++");
-                //   String imgurl="https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}";
-                //   print("Image dowoinloading    ${imgurl}");
-                //   //
-                //   final tempDir = await getTemporaryDirectory();
-                //   final path = '${tempDir.path}/myfile.jpg' ;
-                //   await Dio().download(imgurl,path);
-                //
-                //   await GallerySaver.saveImage("https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}");
-                //
-                //
-                // }, child:Text("Download",style: TextStyle(color: Colors.white,fontSize: 20),)),
-              ],
+                  //
+                  // TextButton(onPressed: () async {
+                  //   print("+++++++++${widget.index}+++++++++++");
+                  //   String imgurl="https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}";
+                  //   print("Image dowoinloading    ${imgurl}");
+                  //   //
+                  //   final tempDir = await getTemporaryDirectory();
+                  //   final path = '${tempDir.path}/myfile.jpg' ;
+                  //   await Dio().download(imgurl,path);
+                  //
+                  //   await GallerySaver.saveImage("https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}");
+                  //
+                  //
+                  // }, child:Text("Download",style: TextStyle(color: Colors.white,fontSize: 20),)),
+                ],
+              ),
             ),
-          ),
-
+            * */
         ],
+      ),
+      floatingActionButton: SpeedDialFabWidget(
+        secondaryIconsList: [
+          Icons.download,
+          Icons.wallpaper,
+        ],
+        secondaryIconsText: [
+          "Download",
+          "Apply",
+        ],
+
+        secondaryIconsOnPress: [
+          () async {
+            String imgurl =
+                "https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}";
+            // print("Image dowoinloading    ${imgurl}"),
+            //
+            final tempDir = await getTemporaryDirectory();
+            final path = '${tempDir.path}/myfile.jpg';
+            await Dio().download(imgurl, path);
+
+            await GallerySaver.saveImage(
+                    "https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}")
+                .then((value) => download_toast());
+          },
+          () async {
+            String wallpeaeper =
+                "https://necktattoo.emozzydev.xyz//upload/${widget.recentlist[widget.index].imageUpload}";
+
+            int location = WallpaperManager.HOME_SCREEN;
+            var file = await DefaultCacheManager().getSingleFile(wallpeaeper);
+            bool result =
+                await WallpaperManager.setWallpaperFromFile(file.path, location)
+                    .then((value) => wallpaper_toast());
+          },
+        ],
+        secondaryBackgroundColor: Colors.grey,
+        secondaryForegroundColor: Colors.black,
+        primaryBackgroundColor: Colors.blue,
+        primaryForegroundColor: Colors.black,
       ),
     );
   }
-  
-  
-  download_toast()
-  {
+
+  download_toast() {
     Fluttertoast.showToast(
         msg: "Download Succesfully",
         toastLength: Toast.LENGTH_SHORT,
@@ -285,8 +304,7 @@ class _origional_imageState extends State<origional_image> {
         fontSize: 13.0);
   }
 
-  wallpaper_toast()
-  {
+  wallpaper_toast() {
     Fluttertoast.showToast(
         msg: "Succesfully applied",
         toastLength: Toast.LENGTH_SHORT,
@@ -296,7 +314,4 @@ class _origional_imageState extends State<origional_image> {
         textColor: Colors.white,
         fontSize: 13.0);
   }
-
 }
-
-

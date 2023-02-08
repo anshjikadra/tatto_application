@@ -38,7 +38,7 @@ class _recent_pageState extends State<recent_page> {
           setState(() {
             pagenumber = pagenumber + 1;
             isloadmore = true;
-            CircularProgressIndicator();
+
           });
           recent_api();
         }
@@ -54,7 +54,9 @@ class _recent_pageState extends State<recent_page> {
       Map<String, dynamic> r_data = jsonDecode(respose.body);
       data_recent = recent_data.fromJson(r_data);
       alldata.addAll(data_recent!.posts!);
-      setState(() {});
+      setState(() {
+        isloadmore=false;
+      });
     } else {
       throw Exception("Failed.....!");
     }
@@ -71,23 +73,29 @@ class _recent_pageState extends State<recent_page> {
               controller: _controller,
               itemCount: alldata.length,
               itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    print('Hello recent');
+                return Stack(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        print('Hello recent');
 
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return origional_image(
-                            index: index, recentlist: alldata);
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return origional_image(
+                                index: index, recentlist: alldata);
+                          },
+                        ));
                       },
-                    ));
-                  },
-                  child: Container(
-                    child: Image.network(
-                      "https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}",
-                      fit: BoxFit.cover,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image:NetworkImage("https://necktattoo.emozzydev.xyz//upload/thumbs/${alldata[index].imageUpload.toString()}"),fit: BoxFit.cover
+                          ),
+                        ),
+
+                      ),
                     ),
-                  ),
+                    if(isloadmore==true)Center(child: CircularProgressIndicator(),)
+                  ],
                 );
               },
               gridDelegate:

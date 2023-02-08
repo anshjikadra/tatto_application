@@ -11,8 +11,6 @@ class home_page extends StatefulWidget {
 }
 
 class _home_pageState extends State<home_page> {
-
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -20,21 +18,25 @@ class _home_pageState extends State<home_page> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Neck Tattoos"),
-
-
           bottom: TabBar(
-              tabs:[
-                Tab(text: "Popular",),
-                Tab(text: "Recent",),
-                Tab(text: "Random",),
-              ]
-          ),
+              labelStyle: TextStyle(fontWeight: FontWeight.bold),
+              unselectedLabelStyle: TextStyle(),
+              tabs: [
+                Tab(
+                  text: "Recent",
+                ),
+                Tab(
+                  text: "Popular",
+                ),
+                Tab(
+                  text: "Random",
+                ),
+              ]),
         ),
-
-        body:TabBarView(children:[
-          popular_page(),
+        body: TabBarView(children: [
           recent_page(),
-         random_page(),
+          popular_page(),
+          random_page(),
         ]),
       ),
     );

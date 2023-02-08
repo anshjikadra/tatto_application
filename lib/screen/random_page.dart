@@ -44,7 +44,6 @@ class _random_pageState extends State<random_page> {
           setState(() {
             pagenumber = pagenumber + 1;
             isloadmore = true;
-            CircularProgressIndicator();
           });
           random_api();
         }
@@ -70,7 +69,9 @@ class _random_pageState extends State<random_page> {
       datalist.addAll(data_random!.posts!);
       print("+++++++${datalist}+++++++++++");
 
-      setState(() {});
+      setState(() {
+        isloadmore=false;
+      });
     } else {
       throw Exception('Failed.....!');
     }
@@ -82,19 +83,25 @@ class _random_pageState extends State<random_page> {
       body: data_random==null? Center(child: CircularProgressIndicator(),):GridView.builder(controller: _controller,
           itemCount: datalist.length,
           itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                print("${datalist[index].imageUpload.toString()}");
-                Navigator.push(context,MaterialPageRoute(builder: (context) {
-                  return origional_image(index:index,recentlist: datalist,);
-                },));
-              },
-              child: Padding(
-                padding: EdgeInsets.all(0),
-                child: Container(
-                  child: Image.network("https://necktattoo.emozzydev.xyz//upload/thumbs/${datalist[index].imageUpload.toString()}",fit: BoxFit.cover),
+            return Stack(
+              children: [
+                InkWell(
+                  onTap: () {
+                    print("${datalist[index].imageUpload.toString()}");
+                    Navigator.push(context,MaterialPageRoute(builder: (context) {
+                      return origional_image(index:index,recentlist: datalist,);
+                    },));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: NetworkImage("https://necktattoo.emozzydev.xyz//upload/thumbs/${datalist[index].imageUpload.toString()}",),fit: BoxFit.cover
+                      )
+                    ),
+
+                  ),
                 ),
-              ),
+                if(isloadmore==true)Center(child: CircularProgressIndicator(),)
+              ],
             );
           },
           gridDelegate:

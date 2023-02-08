@@ -53,6 +53,7 @@ dependencies:
   getwidget:
   flutter_local_notifications:
   fluttertoast:
+  speed_dial_fab:
 
 dev_dependencies:
   flutter_test:
